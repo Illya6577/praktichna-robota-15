@@ -3,96 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Події</title>
+    <title>Події в ліцеї</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: url('background.jpg') no-repeat center center/cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            display: flex;
-            gap: 10px;
-        }
-        .event-block {
-            width: 150px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            border-radius: 10px;
-            background-size: cover;
-            background-position: center;
-        }
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .modal-content {
-            background: white;
-            color: black;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            width: 80%;
-            max-width: 500px;
-            position: relative;
-        }
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 30px;
-            cursor: pointer;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        body { background: url('background.jpg') center/cover fixed; position: relative; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: none; }
+        .container { text-align: center; padding: 50px; color: white; }
+        .title { font-size: 36px; margin-bottom: 20px; }
+        .events { display: flex; justify-content: center; align-items: center; gap: 20px; }
+        .event-block { width: 150px; height: 250px; background: rgba(255, 255, 255, 0.3); border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .event-block:hover { background: rgba(255, 255, 255, 0.5); }
+        .popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 700px; height: 70vh; padding: 20px; background: white; border-radius: 10px; display: none; }
+        .popup-content { display: flex; align-items: center; gap: 20px; justify-content: center; }
+        .popup img { width: 36%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 10px; }
+        .popup-text { flex-grow: 1; text-align: left; }
     </style>
 </head>
 <body>
+    <div class="overlay" id="overlay"></div>
     <div class="container">
-        <div class="event-block" style="background-image: url('event1.jpg');" onclick="openModal('Дебати', 'У виборі президента ліцею важливо наживу подивитись як кандитати будуть відстоювати свою позицію, і чи зможуть витримати цей тиск. Дебати у ліцеї відбуться завтра об 14:05 в актовій залі')">Дебати</div>
-        <div class="event-block" style="background-image: url('event2.jpg');" onclick="openModal('Перший дзвоник', 'Перший дзвоник це свято яке буває тіки раз на рік, як день народження. Перший дзвоник свято яке оголошує початок навчального процесу, і знак здобування нових знань. Це свято відбудеться 2 вересня біля ліцею.')">Перший дзвоник</div>
-        <div class="event-block" style="background-image: url('event3.jpg');" onclick="openModal('Останній дзвоник', 'Останній дзвоник - свято яке учні найбільше люблять. В цей день ви отримуєте довгоочікуванні канікули на 3 місяці і можете їх провести з користтю. Це день коли 11-ті класи випускаються  і йдуть у вищі заклади, та коли діти стають дорослішими на 1 клас.')">Останній дзвоник</div>
-    </div>
-
-    <div class="modal" id="modal" onclick="closeModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close" onclick="closeModal(event)">&times;</span>
-            <h2 id="modal-title"></h2>
-            <p id="modal-description"></p>
+        <div class="title">Події в ліцеї</div>
+        <div class="events">
+            <div class="event-block" onclick="openPopup('Дебати', 'У виборі президента ліцею важливо наживу подивитись як кандитати будуть відстоювати свою позицію, і чи зможуть витримати цей тиск. Дебати у ліцеї відбуться завтра об 14:05 в актовій залі', 'event1.jpg')">Дебати</div>
+            <div class="event-block" onclick="openPopup('Перший дзвоник', 'Перший дзвоник це свято яке буває тіки раз на рік, як день народження. Перший дзвоник свято яке оголошує початок навчального процесу, і знак здобування нових знань. Це свято відбудеться 2 вересня біля ліцею.', 'event2.jpg')">Перший дзвоник</div>
+            <div class="event-block" onclick="openPopup('Останній дзвоник', 'Останній дзвоник - свято яке учні найбільше люблять. В цей день ви отримуєте довгоочікуванні канікули на 3 місяці і можете їх провести з користтю. Це день коли 11-ті класи випускаються  і йдуть у вищі заклади, та коли діти стають дорослішими на 1 клас.', 'event3.jpg')">Останній дзвоник</div>
         </div>
     </div>
-
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <img id="popup-img" src="" alt="Фото події">
+            <div class="popup-text">
+                <h2 id="popup-title"></h2>
+                <p id="popup-desc"></p>
+            </div>
+        </div>
+    </div>
     <script>
-        function openModal(title, description) {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-description').innerText = description;
-            document.getElementById('modal').style.visibility = 'visible';
-            document.getElementById('modal').style.opacity = '1';
+        function openPopup(title, desc, imgSrc) {
+            document.getElementById('popup-title').innerText = title;
+            document.getElementById('popup-desc').innerText = desc;
+            document.getElementById('popup-img').src = imgSrc;
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
         }
-        function closeModal(event) {
-            if (event.target === document.getElementById('modal') || event.target.classList.contains('close')) {
-                document.getElementById('modal').style.visibility = 'hidden';
-                document.getElementById('modal').style.opacity = '0';
-            }
-        }
+        document.getElementById('overlay').addEventListener('click', function () {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        });
     </script>
 </body>
 </html>
