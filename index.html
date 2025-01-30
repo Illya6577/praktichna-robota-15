@@ -1,55 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSB-3 | Events</title>
+    <title>Події</title>
     <style>
         body {
-            font-family: sans-serif;
             margin: 0;
+            padding: 0;
+            background: url('background.jpg') no-repeat center center/cover;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            background-image: url('background.jpg'); 
+            height: 100vh;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            gap: 10px;
+        }
+        .event-block {
+            width: 150px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 10px;
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
-            color: #fff; /* Text color */
         }
-
-        .container {
-            background: rgba(0, 0, 0, 0.7); /* Semi-transparent overlay */
-            padding: 30px;
-            border-radius: 5px;
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-content {
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
             text-align: center;
+            width: 80%;
+            max-width: 500px;
+            position: relative;
         }
-
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        li {
-            margin-bottom: 15px;
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <h1>Майбутні події</h1>
-        <ul>
-            <li><strong>[Event 1 Name]</strong> - [Date] - [Time] - [Location/Description]</li>
-            <li><strong>[Event 2 Name]</strong> - [Date] - [Time] - [Location/Description]</li>
-            <li><strong>[Event 3 Name]</strong> - [Date] - [Time] - [Location/Description]</li>
-            </ul>
+        <div class="event-block" style="background-image: url('event1.jpg');" onclick="openModal('Дебати', 'У виборі президента ліцею важливо наживу подивитись як кандитати будуть відстоювати свою позицію, і чи зможуть витримати цей тиск. Дебати у ліцеї відбуться завтра об 14:05 в актовій залі')">Дебати</div>
+        <div class="event-block" style="background-image: url('event2.jpg');" onclick="openModal('Перший дзвоник', 'Перший дзвоник це свято яке буває тіки раз на рік, як день народження. Перший дзвоник свято яке оголошує початок навчального процесу, і знак здобування нових знань. Це свято відбудеться 2 вересня біля ліцею.')">Перший дзвоник</div>
+        <div class="event-block" style="background-image: url('event3.jpg');" onclick="openModal('Останній дзвоник', 'Останній дзвоник - свято яке учні найбільше люблять. В цей день ви отримуєте довгоочікуванні канікули на 3 місяці і можете їх провести з користтю. Це день коли 11-ті класи випускаються  і йдуть у вищі заклади, та коли діти стають дорослішими на 1 клас.')">Останній дзвоник</div>
     </div>
 
+    <div class="modal" id="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close" onclick="closeModal(event)">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-description"></p>
+        </div>
+    </div>
+
+    <script>
+        function openModal(title, description) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-description').innerText = description;
+            document.getElementById('modal').style.visibility = 'visible';
+            document.getElementById('modal').style.opacity = '1';
+        }
+        function closeModal(event) {
+            if (event.target === document.getElementById('modal') || event.target.classList.contains('close')) {
+                document.getElementById('modal').style.visibility = 'hidden';
+                document.getElementById('modal').style.opacity = '0';
+            }
+        }
+    </script>
 </body>
 </html>
