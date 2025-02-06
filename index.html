@@ -11,12 +11,12 @@
         .container { text-align: center; padding: 50px; color: white; }
         .title { font-size: 36px; margin-bottom: 20px; }
         .events { display: flex; justify-content: center; align-items: center; gap: 20px; }
-        .event-block { width: 150px; height: 250px; background: rgba(255, 255, 255, 0.3); border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .event-block:hover { background: rgba(255, 255, 255, 0.5); }
-        .popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 700px; height: 70vh; padding: 20px; background: white; border-radius: 10px; display: none; }
+        .event-block { width: 150px; height: 250px; background: rgba(0, 0, 0, 0.7); border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .event-block:hover { background: rgba(0, 0, 0, 0.4); }
+        .popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 1000px; height: 70vh; padding: 20px; background: white; border-radius: 10px; display: none; }
         .popup-content { display: flex; align-items: center; gap: 20px; justify-content: center; }
-        .popup img { width: min(200%, calc(70vh * 16 / 9)); height: auto; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 10px; overflow: hidden; }
-        .popup-text { flex-grow: 3; text-align: top; }
+        .popup img { width: min(100%, calc(60vh * 16 / 9)); height: auto; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 10px; overflow: hidden; }
+        .popup-text { flex-grow: 5; text-align: top; }
     </style>
 </head>
 <body>
